@@ -12,9 +12,9 @@ import javax.crypto.spec.SecretKeySpec;
 
 public class AES {
     // Class private variables
-    private static final String SECRET_KEY = "my_super_secret_key_ho_ho_ho";
+    private static final String SECRET_KEY = "teloarreglo";
 
-    private static final String SALT = "ssshhhhhhhhhhh!!!!";
+    private static final String SALT = "teloarreglo";
     
     // This method use to encrypt to string
     public static String encrypt(String strToEncrypt,OutputStream os)
@@ -47,13 +47,12 @@ public class AES {
                     ivspec);
             // Return encrypted string
 
-            writer.write(Base64.getEncoder().encodeToString(
-                    cipher.doFinal(strToEncrypt.getBytes(
-                            StandardCharsets.UTF_8))));
-
-            return Base64.getEncoder().encodeToString(
+            String a = Base64.getEncoder().encodeToString(
                     cipher.doFinal(strToEncrypt.getBytes(
                             StandardCharsets.UTF_8)));
+            writer.write(a);
+
+            return a;
         }
         catch (Exception e) {
             System.out.println("Error while encrypting: "
@@ -66,7 +65,6 @@ public class AES {
     public static String decrypt(String strToDecrypt)
     {
         try {
-
             // Default byte array
             byte[] iv = { 0, 0, 0, 0, 0, 0, 0, 0,
                     0, 0, 0, 0, 0, 0, 0, 0 };
@@ -93,6 +91,7 @@ public class AES {
                     "AES/CBC/PKCS5PADDING");
             cipher.init(Cipher.DECRYPT_MODE, secretKey,
                     ivspec);
+
             // Return decrypted string
             return new String(cipher.doFinal(
                     Base64.getDecoder().decode(strToDecrypt)));
