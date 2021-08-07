@@ -13,7 +13,7 @@ public class Encrypt_and_Decrypt {
     private static final String SECRET_KEY = "my_super_secret_key_ho_ho_ho";
 
     private static final String SALT = "ssshhhhhhhhhhh!!!!";
-    public static void encrypt(String strToEncrypt)
+    public static void encrypt(String strToEncrypt,File archivo)
     {
         try {
             // Create default byte array
@@ -39,8 +39,8 @@ public class Encrypt_and_Decrypt {
             // Return encrypted string
 
             //escritura del archivo hex
-            File archivo=new File("Imagen_result.encode");
-            FileWriter fw=new FileWriter(archivo);
+            //File archivo=new File("Imagen_result.encode");
+            FileWriter fw=new FileWriter(archivo+".TeloEncodeo");
             BufferedWriter bw=new BufferedWriter(fw);
 
             String encode =  Base64.getEncoder().encodeToString(
@@ -48,7 +48,7 @@ public class Encrypt_and_Decrypt {
                             StandardCharsets.UTF_8)));
             bw.write(""+encode);
             bw.flush();
-            System.out.println("El archivo fue encriptado correctamente, este tiene el valor de: "+encode);
+            archivo.delete();
         }
         catch (Exception e) {
             System.out.println("Error while encrypting: "
@@ -91,11 +91,19 @@ public class Encrypt_and_Decrypt {
                 tmp_tmp += cadena.replaceAll("\n", "");
             }
 
+            //File archivo=new File("Imagen_result.encode");
+            FileWriter fw=new FileWriter(file_tmp);
+            BufferedWriter bw=new BufferedWriter(fw);
+
             String decode = new String(cipher.doFinal(Base64.getDecoder().decode(tmp_tmp)));
 
             System.out.println("El archivo fue decodeado correctamente, este tiene el valor de: "+decode);
 
+            bw.write(""+decode);
+            bw.flush();
+
             return decode;
+
         }
         catch (Exception e) {
             System.out.println("Error while decrypting: "

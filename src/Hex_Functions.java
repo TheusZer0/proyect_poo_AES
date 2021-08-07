@@ -21,16 +21,17 @@ public class Hex_Functions {
         return final_tmp;
     }
 
-    public static void hexToBinary(InputStream is, OutputStream os) {
-        Reader reader = new BufferedReader(new InputStreamReader(is));
+    public static void hexToBinary(File is, OutputStream os) throws FileNotFoundException {
+        FileReader fr =new FileReader(is);
+        BufferedReader br =new BufferedReader(fr);
 
         try {
             char buffer[] = new char[2];
 
-            while (reader.read(buffer) != -1) {
-                os.write((Character.digit(buffer[0], 16) << 4)
-                        + Character.digit(buffer[1], 16));
+            while (br.read(buffer) != -1) {
+                os.write((Character.digit(buffer[0], 16) << 4) + Character.digit(buffer[1], 16));
             }
+
         } catch (IOException e) {
             System.err.println("An error occurred");
         }
