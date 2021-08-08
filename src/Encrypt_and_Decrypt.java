@@ -10,9 +10,10 @@ import java.security.spec.KeySpec;
 import java.util.Base64;
 
 public class Encrypt_and_Decrypt {
-    private static final String SECRET_KEY = "my_super_secret_key_ho_ho_ho";
+    public static final String SECRET_KEY = "TeloEncodeo"; //CAMBIAR KEY
 
-    private static final String SALT = "ssshhhhhhhhhhh!!!!";
+    public static final String SALT = "Telematica"; //CAMBIAR O NO SALTO
+
     public static void encrypt(String strToEncrypt,File archivo)
     {
         try {
@@ -39,7 +40,6 @@ public class Encrypt_and_Decrypt {
             // Return encrypted string
 
             //escritura del archivo hex
-            //File archivo=new File("Imagen_result.encode");
             FileWriter fw=new FileWriter(archivo+".TeloEncodeo");
             BufferedWriter bw=new BufferedWriter(fw);
 
@@ -56,8 +56,7 @@ public class Encrypt_and_Decrypt {
         }
     }
 
-    public static String decrypt(File file_tmp)
-    {
+    public static String decrypt(File file_tmp){
         try {
             // Default byte array
             byte[] iv = { 0, 0, 0, 0, 0, 0, 0, 0,
@@ -91,23 +90,17 @@ public class Encrypt_and_Decrypt {
                 tmp_tmp += cadena.replaceAll("\n", "");
             }
 
-            //File archivo=new File("Imagen_result.encode");
             FileWriter fw=new FileWriter(file_tmp);
             BufferedWriter bw=new BufferedWriter(fw);
 
             String decode = new String(cipher.doFinal(Base64.getDecoder().decode(tmp_tmp)));
-
-            System.out.println("El archivo fue decodeado correctamente, este tiene el valor de: "+decode);
-
             bw.write(""+decode);
             bw.flush();
-
             return decode;
-
         }
         catch (Exception e) {
-            System.out.println("Error while decrypting: "
-                    + e.toString());
+            file_tmp.delete();
+            System.out.println("Error de encriptado, la key usada es invalida");
         }
         return null;
     }
